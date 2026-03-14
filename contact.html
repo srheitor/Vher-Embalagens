@@ -1,170 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VHER Embalagens - Contato</title>
-
-<style>
-
-body{
-font-family:Arial;
-margin:0;
-background:#f4f6f9;
-}
-
-header{
-display:flex;
-justify-content:space-between;
-padding:20px 10%;
-background:white;
-box-shadow:0 2px 10px rgba(0,0,0,0.05);
-}
-
-.logo{
-font-size:24px;
-font-weight:bold;
-color:#2b6cb0;
-}
-
-nav a{
-margin-left:20px;
-text-decoration:none;
-color:#333;
-}
-
-.container{
-padding:80px 10%;
-max-width:600px;
-margin:auto;
-}
-
-h1{
-margin-bottom:30px;
-text-align:center;
-}
-
-form{
-display:flex;
-flex-direction:column;
-gap:15px;
-margin-bottom:40px;
-}
-
-input, textarea{
-padding:12px;
-border-radius:6px;
-border:1px solid #ccc;
-font-size:16px;
-}
-
-button{
-background:#2b6cb0;
-color:white;
-border:none;
-padding:12px;
-border-radius:6px;
-font-size:16px;
-cursor:pointer;
-}
-
-.social{
-text-align:center;
-margin-bottom:40px;
-}
-
-.social h2{
-margin-bottom:20px;
-}
-
-.social-links{
-display:flex;
-justify-content:center;
-gap:20px;
-}
-
-.social-links a{
-text-decoration:none;
-color:white;
-padding:12px 20px;
-border-radius:6px;
-font-weight:bold;
-}
-
-.whatsapp{
-background:#25D366;
-}
-
-.instagram{
-background:#E4405F;
-}
-
-.facebook{
-background:#1877F2;
-}
-
-footer{
-background:#1a202c;
-color:white;
-text-align:center;
-padding:30px;
-margin-top:60px;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Vhêr Embalagens</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
 <header>
-<div class="logo">Vhêr Embalagens</div>
-<nav>
-<a href="index.html">Home</a>
-<a href="products.html">Produtos</a>
-<a href="about.html">Sobre nós</a>
-<a href="contact.html">Contato</a>
-</nav>
+    <div class="logo">Vhêr Embalagens</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Produtos</a>
+        <a href="about.html">Sobre nós</a>
+        <a href="contact.html">Contato</a>
+    </nav>
 </header>
 
-<div class="container">
+<div class="container contact-container">
+    <h1 class="section-title">Entre em Contato</h1>
 
-<h1>Entre em Contato</h1>
+    <div class="social-links">
+        <a class="whatsapp" href="https://wa.link/4g6coj" target="_blank">WhatsApp</a>
+        <a class="instagram" href="https://www.instagram.com/vher_embalagens/" target="_blank">Instagram</a>
+    </div>
 
-<div class="social">
-
-
-<div class="social-links">
-
-<a class="whatsapp"
-href="https://wa.link/4g6coj"
-target="_blank">
-WhatsApp
-</a>
-
-<a class="instagram"
-href="https://www.instagram.com/vher_embalagens/"
-target="_blank">
-Instagram
-</a>
-
-</div>
-
-</div>
-
-
-<form action="mailto:acaboudingrana@gmail.com" method="post" enctype="text/plain">
-<input type="text" placeholder="Seu nome" required>
-<input type="email" placeholder="Seu e-mail" required>
-<textarea rows="5" placeholder="Assunto"></textarea>
-<button type="submit">Enviar E-mail</button>
-</form>
-
-
-
+    <form action="mailto:contato@vherembalagens.com.br" method="post" enctype="text/plain">
+        <input type="text" placeholder="Seu nome" required>
+        <input type="email" placeholder="Seu e-mail" required>
+        <textarea rows="5" placeholder="Como podemos ajudar? (Ex: Orçamento de 1000 caixas de pizza)"></textarea>
+        <button type="submit" class="btn-contact" style="font-size: 18px;">Enviar Mensagem por E-mail</button>
+    </form>
 </div>
 
 <footer>
-<p>© 2026 OfficePack</p>
+    <p>© 2026 Vhêr Embalagens</p>
 </footer>
 
 </body>
