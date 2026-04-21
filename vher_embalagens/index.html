@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vhêr Embalagens - Home</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -26,29 +27,67 @@
         <a class="cta" href="products.html">Ver Produtos</a>
     </div>
     <img src="img/vher.jpg" alt="Vhêr Embalagens">
+    
 </section>
 
 <section class="container">
     <h2 class="section-title">Nossos Destaques</h2>
-    <div class="grid">
-        <div class="card">
-            <h3>Caixas de Pizza</h3>
-            <p>Modelos oitavados e quadrados em diversos tamanhos.</p>
-            <a href="products.html" class="cta">Saiba mais</a>
-        </div>
-        <div class="card">
-            <h3>Caixas de Açaí</h3>
-            <p>Resistentes e térmicas para 5L e 10L.</p>
-            <a href="products.html" class="cta">Saiba mais</a>
-        </div>
-        <div class="card">
-            <h3>Sacolas</h3>
-            <p>Personalize a marca do seu negócio em nossas sacolas.</p>
-            <a href="products.html" class="cta">Saiba mais</a>
-        </div>
+    
+    <!-- CORREÇÃO 1: CRIAR O ELEMENTO ONDE OS PRODUTOS VÃO APARECER -->
+    <div class="grid" id="produtos-destaque">
+        <p>Carregando produtos...</p>
     </div>
 </section>
 
+<footer>
+    <p>© 2026 Vhêr Embalagens. Todos os direitos reservados.</p>
+</footer>
+
+<!-- CORREÇÃO 2: COLOCAR O SCRIPT NO FINAL DO BODY PARA NÃO DAR ERRO DE ELEMENTO NULL -->
+<script>
+    const DB_URL = "https://apovigktqhebeeuodexa.supabase.co";
+    const DB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwb3ZpZ2t0cWhlYmVldW9kZXhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1MDQ0ODEsImV4cCI6MjA4OTA4MDQ4MX0.sFjMS2KgdwGeTziaazHSAadDEwQlroMC_7rtS_2EIww";
+
+    const _supabase = supabase.createClient(DB_URL, DB_KEY);
+
+    async function getProdutos() {
+        const { data, error } = await _supabase
+            .from('produtos') 
+            .select('*');
+
+        const container = document.getElementById('produtos-destaque');
+
+        if (error) {
+            console.error('Erro ao buscar dados:', error);
+            container.innerHTML = '<p>Erro ao carregar produtos. Verifique o console.</p>';
+            return;
+        }
+
+        if (data && data.length > 0) {
+            container.innerHTML = ''; 
+
+            data.forEach(item => {
+                // CORREÇÃO 3: USAR TAG <img> PARA A FOTO E VERIFICAR NOMES DAS COLUNAS
+                // Certifique-se que no seu banco os nomes são: nome_produto, foto, preco, descricao
+                const card = `
+                    <div class="card">
+                        <img src="${item.foto}" alt="${item.nome_produto}" class="product-img" onerror="this.src='img/vher.jpg'">
+                        <h3>${item.nome_produto}</h3>
+                        <p><strong>R$ ${item.preco}</strong></p>
+                        <p>${item.descricao}</p>
+                        <a href="products.html" class="cta">Saiba mais</a>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        } else {
+            container.innerHTML = '<p>Nenhum produto encontrado no banco de dados.</p>';
+        }
+    }
+
+    getProdutos();
+</script>
+</section>
 <footer>
     <p>© 2026 Vhêr Embalagens. Todos os direitos reservados.</p>
 </footer>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos - Vhêr Embalagens</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -20,46 +21,46 @@
 
 <div class="container">
     <h1 class="section-title">Nossos Produtos</h1>
-
-    <div class="grid">
-        <div class="card">
-            <img class="product-img" src="img/caixas_pizza.jpg" alt="Caixas para pizza">
-            <h2>Caixas para Pizza</h2>
-            <p>Genéricas ou personalizadas para o seu negócio.</p>
-            <ul>
-                <li>Oitavadas ou Quadradas</li>
-                <li>Papelão de alta resistência</li>
-                <li>Tamanhos: 25cm a 45cm</li>
-            </ul>
-            <a href="https://wa.link/4g6coj" target="_blank"><button class="btn-contact">Orçamento via WhatsApp</button></a>
-        </div>
-
-        <div class="card">
-            <img class="product-img" src="img/sacolas.jpg" alt="Sacolas personalizadas">
-            <h2>Sacolas e Sacos</h2>
-            <p>Ideal para agregar valor à sua entrega.</p>
-            <ul>
-                <li>Papel Kraft ou Offset</li>
-                <li>Impressão de alta qualidade</li>
-                <li>Vários tamanhos disponíveis</li>
-            </ul>
-            <a href="https://wa.link/4g6coj" target="_blank"><button class="btn-contact">Orçamento via WhatsApp</button></a>
-        </div>
-
-        <div class="card">
-            <img class="product-img" src="img/caixas_acai.jpg" alt="Caixas para açaí">
-            <h2>Caixas para Açaí</h2>
-            <p>Segurança e higiene para o seu produto.</p>
-            <ul>
-                <li>Capacidade de 05L e 10L</li>
-                <li>Revestimento interno especial</li>
-                <li>Fáceis de montar e estocar</li>
-            </ul>
-            <a href="https://wa.link/4g6coj" target="_blank"><button class="btn-contact">Orçamento via WhatsApp</button></a>
-        </div>
+    <div class="grid" id="grid-produtos">
+        <p>Carregando catálogo...</p>
     </div>
 </div>
 
+<footer>
+    <p>© 2026 Vhêr Embalagens</p>
+</footer>
+
+<script>
+    const DB_URL = "https://apovigktqhebeeuodexa.supabase.co";
+    const DB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwb3ZpZ2t0cWhlYmVldW9kZXhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1MDQ0ODEsImV4cCI6MjA4OTA4MDQ4MX0.sFjMS2KgdwGeTziaazHSAadDEwQlroMC_7rtS_2EIww";
+
+    const _supabase = supabase.createClient(DB_URL, DB_KEY);
+
+    async function carregarProdutos() {
+        const { data, error } = await _supabase
+            .from('produtos')
+            .select('*');
+
+        const grid = document.getElementById('grid-produtos');
+
+        if (error) {
+            console.error(error);
+            grid.innerHTML = "<p>Erro ao carregar produtos.</p>";
+            return;
+        }
+
+        grid.innerHTML = data.map(prod => `
+            <div class="card">
+                <img class="product-img" src="${prod.foto || 'img/placeholder.jpg'}" alt="${prod.nome_produto}">
+                <h2>${prod.nome_produto}</h2>
+                <p>${prod.descricao}</p>
+                <a href="https://wa.link/4g6coj" target="_blank"><button class="btn-contact">Orçamento via WhatsApp</button></a>
+            </div>
+        `).join('');
+    }
+
+    carregarProdutos();
+</script>
 <footer>
     <p>© 2026 Vhêr Embalagens</p>
 </footer>
