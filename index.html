@@ -1,62 +1,3 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vhêr Embalagens - Home</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
-<header>
-    <div class="logo">Vhêr Embalagens</div>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="products.html">Produtos</a>
-        <a href="about.html">Sobre nós</a>
-        <a href="contact.html">Contato</a>
-    </nav>
-</header>
-
-<section class="hero container">
-    <div class="hero-text">
-        <h1>Embalagens para Delivery</h1>
-        <p>Caixas para pizzas, salgados, doces, bolos e e-commerce.</p>
-        <p>Temos também sacos para delivery e sacolas personalizadas com a melhor qualidade do mercado.</p> 
-        <a class="cta" href="products.html">Ver Produtos</a>
-    </div>
-    <img src="img/vher-main.jpg" alt="Vhêr Embalagens">
-</section>
-
-<section class="container">
-    <h2 class="section-title">Nossos Destaques</h2>
-    <div class="grid">
-        <div class="card">
-            <h3>Caixas de Pizza</h3>
-            <p>Modelos oitavados e quadrados em diversos tamanhos.</p>
-            <a href="products.html" class="cta">Saiba mais</a>
-        </div>
-        <div class="card">
-            <h3>Caixas de Açaí</h3>
-            <p>Resistentes e térmicas para 5L e 10L.</p>
-            <a href="products.html" class="cta">Saiba mais</a>
-        </div>
-        <div class="card">
-            <h3>Sacolas</h3>
-            <p>Personalize a marca do seu negócio em nossas sacolas.</p>
-            <a href="products.html" class="cta">Saiba mais</a>
-        </div>
-    </div>
-</section>
-
-<footer>
-    <p>© 2026 Vhêr Embalagens. Todos os direitos reservados.</p>
-</footer>
-
-</body>
-</html>
-=======
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -82,16 +23,16 @@
     <div class="hero-text">
         <h1>Embalagens para Delivery</h1>
         <p>Caixas para pizzas, salgados, doces, bolos e e-commerce.</p>
-        <p>Temos também sacos para delivery e sacolas personalizadas com a melhor qualidade do mercado.</p> 
+        <p>Temos também sacos para delivery e sacolas personalizadas com a melhor qualidade do mercado.</p>
         <a class="cta" href="products.html">Ver Produtos</a>
     </div>
-    <img src="img/vher.jpg" alt="Vhêr Embalagens">
-    
+    <img src="img/vher-main.jpeg" alt="Vhêr Embalagens">
+
 </section>
 
 <section class="container">
     <h2 class="section-title">Nossos Destaques</h2>
-    
+
     <!-- CORREÇÃO 1: CRIAR O ELEMENTO ONDE OS PRODUTOS VÃO APARECER -->
     <div class="grid" id="produtos-destaque">
         <p>Carregando produtos...</p>
@@ -111,7 +52,7 @@
 
     async function getProdutos() {
         const { data, error } = await _supabase
-            .from('produtos') 
+            .from('produtos')
             .select('*');
 
         const container = document.getElementById('produtos-destaque');
@@ -123,7 +64,7 @@
         }
 
         if (data && data.length > 0) {
-            container.innerHTML = ''; 
+            container.innerHTML = '';
 
             data.forEach(item => {
                 // CORREÇÃO 3: USAR TAG <img> PARA A FOTO E VERIFICAR NOMES DAS COLUNAS
@@ -145,11 +86,6 @@
 
     getProdutos();
 </script>
-</section>
-<footer>
-    <p>© 2026 Vhêr Embalagens. Todos os direitos reservados.</p>
-</footer>
 
 </body>
 </html>
->>>>>>> 8a4f26d2b17b4b40f6592fc9d6a9a43ad7cd42b5
