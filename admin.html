@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Cadastro de Produtos</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* Estilos específicos para o formulário admin */
+        .admin-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        .admin-form h2 { margin-bottom: 20px; color: #2b6cb0; }
+        .product-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+        }
+        .btn-delete {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Vhêr Admin</div>
+    <nav>
+        <a href="index.html">Ver Site</a>
+        <a href="admin.html">Painel Admin</a>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="admin-form">
+        <h2>Cadastrar Novo Produto</h2>
+        <form id="form-produto">
+            <input type="text" id="nome_produto" placeholder="Nome do Produto (Ex: Caixa de Pizza 35cm)" required>
+            <input type="file" id="foto_file" accept="image/*" required>
+            <textarea id="descricao" rows="4" placeholder="Descrição detalhada do produto" required></textarea>
+            <button type="submit" class="btn-contact" id="btn-salvar">Salvar Produto</button>
+        </form>
+    </div>
+
+    <h2>Produtos Cadastrados</h2>
+    <div id="lista-produtos-admin">
+        <!-- Lista de produtos aparecerá aqui -->
+    </div>
+</div>
+
+<script>
+    const DB_URL = "https://apovigktqhebeeuodexa.supabase.co";
+    const DB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwb3ZpZ2t0cWhlYmVldW9kZXhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1MDQ0ODEsImV4cCI6MjA4OTA4MDQ4MX0.sFjMS2KgdwGeTziaazHSAadDEwQlroMC_7rtS_2EIww";
+
+    const _supabase = supabase.createClient(DB_URL, DB_KEY);
+
+    const form = document.getElementById('form-produto');
+    const listaContainer = document.getElementById('lista-produtos-admin');
+
+    // --- FUNÇÃO PARA CADASTRAR ---
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btn-salvar');
+        btn.innerText = "Enviando Imagem...";
+        btn.disabled = true;
+
+        const fileInput = document.getElementById('foto_file');
+        const file = fileInput.files[0];
+        
+        if (!file) return;
+
+        // 1. Gerar um nome único para a imagem (para não sobrescrever outras)
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random()}-${Date.now()}.${fileExt}`;
+        const filePath = fileName;
+
+        try {
+            // 2. Fazer o Upload para o Storage
+            const { data: uploadData, error: uploadError } = await _supabase.storage
+                .from('produtos-imagens') // Nome do bucket que você criou
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            // 3. Pegar a URL pública da imagem enviada
+            const { data: publicUrlData } = _supabase.storage
+                .from('produtos-imagens')
+                .getPublicUrl(filePath);
+
+            const publicUrl = publicUrlData.publicUrl;
+
+            // 4. Salvar no Banco de Dados com a URL da foto
+            btn.innerText = "Salvando no Banco...";
+            const novoProduto = {
+                nome_produto: document.getElementById('nome_produto').value,
+                descricao: document.getElementById('descricao').value,
+                foto: publicUrl // Aqui salvamos o link gerado pelo storage
+            };
+
+            const { error: dbError } = await _supabase
+                .from('produtos')
+                .insert([novoProduto]);
+
+            if (dbError) throw dbError;
+
+            alert("Produto cadastrado com sucesso!");
+            form.reset();
+            carregarProdutosAdmin();
+
+        } catch (error) {
+            console.error(error);
+            alert("Erro no processo: " + error.message);
+        } finally {
+            btn.innerText = "Salvar Produto";
+            btn.disabled = false;
+        }
+    });
+
+    // --- FUNÇÃO PARA LISTAR E EXCLUIR ---
+    async function carregarProdutosAdmin() {
+        const { data, error } = await _supabase
+            .from('produtos')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) return;
+
+        listaContainer.innerHTML = data.map(item => `
+            <div class="product-list-item">
+                <div>
+                    <strong>${item.nome_produto}</strong> - R$ ${item.preco}
+                </div>
+                <button class="btn-delete" onclick="excluirProduto(${item.id})">Excluir</button>
+            </div>
+        `).join('');
+    }
+
+    async function excluirProduto(id) {
+        if (confirm("Tem certeza que deseja excluir este produto?")) {
+            const { error } = await _supabase
+                .from('produtos')
+                .delete()
+                .eq('id', id);
+
+            if (error) alert("Erro ao excluir");
+            else carregarProdutosAdmin();
+        }
+    }
+
+    carregarProdutosAdmin();
+</script>
+
+</body>
+</html>
