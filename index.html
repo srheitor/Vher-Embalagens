@@ -1,91 +1,18 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caixas para Pizza BH - Home</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<body>
-
-<header>
-    <div class="logo">Caixas para Pizza BH</div>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="products.html">Produtos</a>
-        <a href="about.html">Sobre nós</a>
-        <a href="contact.html">Contato</a>
-    </nav>
-</header>
-
-<section class="hero container">
-    <div class="hero-text">
-        <h1>Embalagens para Delivery</h1>
-        <p>Caixas para pizzas, salgados, doces, bolos e e-commerce.</p>
-        <p>Temos também sacos para delivery e sacolas personalizadas com a melhor qualidade do mercado.</p>
-        <a class="cta" href="products.html">Ver Produtos</a>
-    </div>
-    <img src="img/vher-main.jpeg" alt="Vhêr Embalagens">
-
-</section>
-
-<section class="container">
-    <h2 class="section-title">Nossos Destaques</h2>
-
-    <!-- CORREÇÃO 1: CRIAR O ELEMENTO ONDE OS PRODUTOS VÃO APARECER -->
-    <div class="grid" id="produtos-destaque">
-        <p>Carregando produtos...</p>
-    </div>
-</section>
-
-<footer>
-    <p>© 2026 Vhêr Embalagens. Todos os direitos reservados.</p>
-</footer>
-
-<!-- CORREÇÃO 2: COLOCAR O SCRIPT NO FINAL DO BODY PARA NÃO DAR ERRO DE ELEMENTO NULL -->
-<script>
-    const DB_URL = "https://apovigktqhebeeuodexa.supabase.co";
-    const DB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwb3ZpZ2t0cWhlYmVldW9kZXhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1MDQ0ODEsImV4cCI6MjA4OTA4MDQ4MX0.sFjMS2KgdwGeTziaazHSAadDEwQlroMC_7rtS_2EIww";
-
-    const _supabase = supabase.createClient(DB_URL, DB_KEY);
-
-    async function getProdutos() {
-        const { data, error } = await _supabase
-            .from('produtos')
-            .select('*');
-
-        const container = document.getElementById('produtos-destaque');
-
-        if (error) {
-            console.error('Erro ao buscar dados:', error);
-            container.innerHTML = '<p>Erro ao carregar produtos. Verifique o console.</p>';
-            return;
-        }
-
-        if (data && data.length > 0) {
-            container.innerHTML = '';
-
-            data.forEach(item => {
-                // CORREÇÃO 3: USAR TAG <img> PARA A FOTO E VERIFICAR NOMES DAS COLUNAS
-                // Certifique-se que no seu banco os nomes são: nome_produto, foto, preco, descricao
-                const card = `
-                    <div class="card">
-                        <img src="${item.foto}" alt="${item.nome_produto}" class="product-img" onerror="this.src='img/vher.jpg'">
-                        <h3>${item.nome_produto}</h3>
-                        <p>${item.descricao}</p>
-                        <a href="products.html" class="cta">Saiba mais</a>
-                    </div>
-                `;
-                container.innerHTML += card;
-            });
-        } else {
-            container.innerHTML = '<p>Nenhum produto encontrado no banco de dados.</p>';
-        }
-    }
-
-    getProdutos();
-</script>
-
-</body>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Caixas para Pizza BH (Vhêr Embalagens): caixas para pizza, açaí, hambúrguer, salgados, doces e bolos, sacos para delivery e sacolas personalizadas. Peça seu orçamento pelo WhatsApp." />
+    <meta name="theme-color" content="#d62828" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+    <title>Caixas para Pizza BH · Embalagens para delivery</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
