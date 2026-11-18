@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-18T00:18:24.744Z",
+  "atualizadoEm": "2026-11-18T01:41:15.662Z",
   "categorias": [
     {
       "id": "caixas-pizza",
@@ -35,6 +35,20 @@
     }
   ],
   "produtos": [
+    {
+      "nome": "Cartolina amarela",
+      "descricao": "Tamanho 47x66 cm\n200 folhas \nDuplex 225gr",
+      "categoria": "caixas-pizza",
+      "preco": null,
+      "unidade": "cento",
+      "pedidoMinimo": null,
+      "destaque": false,
+      "ativo": true,
+      "id": "cartolina-amarela",
+      "imagem": "img/produtos/cartolina-amarela-mwlggg0d.webp",
+      "criadoEm": "2026-11-18T01:41:15.240Z",
+      "atualizadoEm": "2026-11-18T01:41:15.240Z"
+    },
     {
       "nome": "Caixa térmica para frango assado",
       "descricao": "Tamanho 25x25x18cm",
