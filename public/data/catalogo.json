@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-17T23:27:58.641Z",
+  "atualizadoEm": "2026-11-18T00:18:24.744Z",
   "categorias": [
     {
       "id": "caixas-pizza",
@@ -35,6 +35,20 @@
     }
   ],
   "produtos": [
+    {
+      "nome": "Caixa térmica para frango assado",
+      "descricao": "Tamanho 25x25x18cm",
+      "categoria": "caixas-pizza",
+      "preco": 125,
+      "unidade": "pacote",
+      "pedidoMinimo": null,
+      "destaque": false,
+      "ativo": true,
+      "id": "caixa-termica-para-frango-assado",
+      "imagem": "img/produtos/caixa-termica-para-frango-assado-mwldhwfb.webp",
+      "criadoEm": "2026-11-18T00:18:23.699Z",
+      "atualizadoEm": "2026-11-18T00:18:23.699Z"
+    },
     {
       "id": "caixas-para-pizzas",
       "nome": "Caixas para pizzas",
