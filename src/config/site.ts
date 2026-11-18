@@ -22,9 +22,9 @@ export const site = {
     whatsapp: '5531975695220',
     mensagemPadrao: 'Olá, vindo do seu site em busca de embalagens.',
     /** null = não exibe. */
-    instagram: 'https://www.instagram.com/vher_embalagens/' as string | null,
+    instagram: 'https://www.instagram.com/caixas_para_pizza_bh/' as string | null,
     /** null = não exibe. */
-    email: 'contato@vherembalagens.com.br' as string | null,
+    email: 'dagrafica57@gmail.com' as string | null,
   },
 
   /**
